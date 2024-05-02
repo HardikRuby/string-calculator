@@ -8,6 +8,7 @@ class StringCalculator
     return 0 if string_of_numbers.length == 0
     delimiter = find_delimiter(string_of_numbers)
     numbers = extract_numbers(string_of_numbers, delimiter)
+    check_for_negatives(numbers)
     numbers.sum
   end
 
@@ -26,5 +27,11 @@ class StringCalculator
   def self.extract_numbers(string_of_numbers, delimiter)
     string_of_numbers = string_of_numbers.gsub(/\/\/.*\n/, '').gsub(/(?<=\d)\n(?=\d)/, delimiter)
     string_of_numbers.split(Regexp.new(delimiter)).map(&:to_i)
+  end
+
+  # Checks for negative numbers and raises an exception if any are found
+  def self.check_for_negatives(numbers)
+    negatives = numbers.select { |num| num < 0 }
+    raise "Negative numbers not allowed: #{negatives.join(', ')}" if negatives.any?
   end
 end

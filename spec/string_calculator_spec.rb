@@ -38,5 +38,11 @@ describe StringCalculator do
         expect(described_class.add("//;\n1;2")).to eq 3
       end
     end
+
+    context "when input string contains negative numbers" do
+      it "should raise exception with message" do
+        expect { described_class.add("1,-2,") }.to raise_error(RuntimeError, "Negative numbers not allowed: -2")
+      end
+    end
   end
 end
