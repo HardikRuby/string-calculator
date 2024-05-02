@@ -44,6 +44,10 @@ describe StringCalculator do
     end
 
     context 'when input string contains new line character' do
+      it "return error when invalid \n passed at end" do
+        expect(described_class.add("1,\n")).to eq 'Invalid input'
+      end
+
       it 'returns sum of passed numbers' do
         expect(described_class.add("1\n2,3")).to eq 6
       end
@@ -57,7 +61,7 @@ describe StringCalculator do
 
     context 'when input string contains negative numbers' do
       it 'raises exception with message' do
-        expect { described_class.add('1,-2,') }.to raise_error(ArgumentError, 'Negative numbers not allowed: -2')
+        expect { described_class.add('1,-2') }.to raise_error(ArgumentError, 'Negative numbers not allowed: -2')
       end
     end
   end

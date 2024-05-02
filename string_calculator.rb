@@ -11,8 +11,11 @@ class StringCalculator
 
     delimiter = find_delimiter(string_of_numbers)
     numbers = extract_numbers(string_of_numbers, delimiter)
-    check_for_negatives(numbers)
-    numbers.sum
+    return 'Invalid input' unless numbers.all?{ |element| valid?(element) }
+
+    numbers_arr = numbers.map(&:to_i)
+    check_for_negatives(numbers_arr)
+    numbers_arr.sum
   end
 
   class << self
@@ -20,17 +23,17 @@ class StringCalculator
 
     # find differnt delimiters
     def find_delimiter(string_of_numbers)
-      delimiter = ','
-      if string_of_numbers.start_with?('//')
-        delimiter = string_of_numbers[2]
-      end
-      delimiter
+      string_of_numbers.start_with?('//') ? string_of_numbers[2] : ','
     end
 
     # Extracts numbers from the string
     def extract_numbers(string_of_numbers, delimiter)
-      string_of_numbers = string_of_numbers.gsub(%r{/\.*\n/}, '').gsub(/(?<=\d)\n(?=\d)/, delimiter)
-      string_of_numbers.split(Regexp.new(delimiter)).map(&:to_i)
+      string_of_numbers = string_of_numbers.gsub(%r{//.*\n}, '').gsub(/(?<=\d)\n(?=\d)/, delimiter)
+      string_of_numbers.split(Regexp.new(delimiter))
+    end
+
+    def valid?(string)
+      !string.scan(/^[-+]?\d*\.?\d+$/).empty?
     end
 
     # Checks for negative numbers and raises an exception if any are found
