@@ -15,5 +15,18 @@ describe StringCalculator do
         expect { described_class.add(1, 2) }.to raise_error(ArgumentError)
       end
     end
+
+    context 'when string id blank' do
+      it "returns 0" do
+        expect(described_class.add("")).to eq 0 
+      end
+    end
+
+    context 'when valid input passed' do
+      it 'returns sum of numbers that are passed as string' do
+        expect(described_class.add("1")).to eq 1
+        expect(described_class.add("1,5")).to eq 6
+      end
+    end
   end
 end
