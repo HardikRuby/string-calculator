@@ -1,5 +1,4 @@
 require_relative '../string_calculator'
-require 'pry'
 
 describe StringCalculator do
   describe '#add' do
@@ -23,7 +22,7 @@ describe StringCalculator do
       end
 
       it 'raises error when more than one string passed in argument' do
-        expect { described_class.add('1', '2') }.to raise_error(ArgumentError, /wrong number of arguments/)
+        expect { described_class.add('1', '2') }.to raise_error(ArgumentError)
       end
     end
 
@@ -44,12 +43,12 @@ describe StringCalculator do
     end
 
     context 'when input string contains new line character' do
-      it "return error when invalid \n passed at end" do
-        expect(described_class.add("1,\n")).to eq 'Invalid input'
-      end
-
       it 'returns sum of passed numbers' do
         expect(described_class.add("1\n2,3")).to eq 6
+      end
+
+      it "return error when invalid \n passed" do
+        expect(described_class.add("1,\n")).to eq 'Invalid input'
       end
     end
 

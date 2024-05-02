@@ -1,6 +1,5 @@
 # frozen_string_literal: true
-
-require 'pry'
+require_relative 'constants'
 
 # This class is responsible to return addition of input string containing numbers
 class StringCalculator
@@ -11,7 +10,7 @@ class StringCalculator
 
     delimiter = find_delimiter(string_of_numbers)
     numbers = extract_numbers(string_of_numbers, delimiter)
-    return 'Invalid input' unless numbers.all?{ |element| valid?(element) }
+    return INVALID_INPUT_STRING unless numbers.all? { |element| valid?(element) }
 
     numbers_arr = numbers.map(&:to_i)
     check_for_negatives(numbers_arr)
@@ -21,9 +20,9 @@ class StringCalculator
   class << self
     private
 
-    # find differnt delimiters
+    # finds differnt delimiters
     def find_delimiter(string_of_numbers)
-      string_of_numbers.start_with?('//') ? string_of_numbers[2] : ','
+      string_of_numbers.start_with?(DOUBLE_SLASH) ? string_of_numbers[2] : DELIMITER_COMMA
     end
 
     # Extracts numbers from the string
@@ -32,6 +31,7 @@ class StringCalculator
       string_of_numbers.split(Regexp.new(delimiter))
     end
 
+    # Ensure no extra new line chars
     def valid?(string)
       !string.scan(/^[-+]?\d*\.?\d+$/).empty?
     end
