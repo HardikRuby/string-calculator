@@ -5,7 +5,7 @@ require 'pry'
 # This class is responsible to return addition of input string containing numbers
 class StringCalculator
   def self.add(string_of_numbers)
-    raise 'Argument must be a string' unless string_of_numbers.is_a?(String)
+    raise ArgumentError, 'Argument must be a string' unless string_of_numbers.is_a?(String)
 
     return 0 if string_of_numbers.empty?
 
@@ -36,7 +36,7 @@ class StringCalculator
     # Checks for negative numbers and raises an exception if any are found
     def check_for_negatives(numbers)
       negatives = numbers.select(&:negative?)
-      raise "Negative numbers not allowed: #{negatives.join(', ')}" if negatives.any?
+      raise ArgumentError, "Negative numbers not allowed: #{negatives.join(', ')}" if negatives.any?
     end
   end
 end
