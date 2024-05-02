@@ -15,6 +15,7 @@ class StringCalculator
 
   # Extracts numbers from the string
   def self.extract_numbers(string_of_numbers)
+    string_of_numbers.gsub!(/\n/, ',')
     string_of_numbers.split(',').map(&:to_i)
   end
 end
